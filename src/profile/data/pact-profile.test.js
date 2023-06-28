@@ -80,10 +80,9 @@ describe('getAccount for one username', () => {
       },
     });
     return provider.executeTest(async (mockserver) => {
-      const mockPort = mockserver.port;
       setConfig({
         ...getConfig(),
-        LMS_BASE_URL: `http://localhost:${mockPort}`,
+        LMS_BASE_URL: mockserver.url,
       });
       const response = await getAccount(usernameEdpt200);
       expect(response).toEqual(expectedUserInfo200);
@@ -104,10 +103,9 @@ describe('getAccount for one username', () => {
       },
     });
     await provider.executeTest(async (mockserver) => {
-      const mockPort = mockserver.port;
       setConfig({
         ...getConfig(),
-        LMS_BASE_URL: `http://localhost:${mockPort}`,
+        LMS_BASE_URL: mockserver.url,
       });
       await expect(getAccount(usernameEdpt404).then((response) => response.data)).rejects.toThrow('Request failed with status code 404');
     });
